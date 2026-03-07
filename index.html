@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Arthur Lim — Data Analyst & ML Engineer. Анализ данных, машинное обучение, визуализация и продуктовая аналитика. Портфолио и контакты.">
+  <title>Arthur Lim — Data Analyst & ML Engineer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Particles Background -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="nav-logo">AL.</a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#skills">Навыки</a></li>
+        <li><a href="#portfolio">Портфолио</a></li>
+        <li><a href="#contact">Контакт</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =============== HERO =============== -->
+  <section class="hero" id="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="hero-content">
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar-ring"></div>
+        <div class="hero-avatar">
+          <img src="avatar.png" alt="Arthur Lim" width="160" height="160">
+        </div>
+      </div>
+
+      <div class="hero-badge">
+        <span class="dot"></span> Открыт к предложениям
+      </div>
+
+      <h1>Привет, я <span class="gradient-text">Артур</span></h1>
+      <div class="typed-role">
+        <span id="typed-text"></span><span class="typed-cursor"></span>
+      </div>
+
+      <p class="hero-description">
+        Превращаю сырые данные в понятные инсайты и бизнес-решения.
+        Строю ML-модели, которые помогают компаниям расти.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#portfolio" class="btn btn-primary">Мои проекты <span>→</span></a>
+        <a href="#contact" class="btn btn-outline">Связаться</a>
+      </div>
+
+      <div class="hero-socials">
+        <a href="https://github.com/LA488" target="_blank" class="social-link" aria-label="GitHub">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+          </svg>
+        </a>
+        <a href="#" class="social-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+          </svg>
+        </a>
+        <a href="#" class="social-link" aria-label="Telegram">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+          </svg>
+        </a>
+        <a href="mailto:arthurlim.data@gmail.com" class="social-link" aria-label="Email">
+          <svg viewBox="0 0 24 24">
+            <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
+            <path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== ABOUT =============== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title">Обо мне</h2>
+        <p class="section-subtitle">Немного о моём пути в мире данных</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Я — Data Analyst и ML Engineer. Мне нравится находить закономерности
+            в данных, строить предсказательные модели и превращать цифры в
+            понятные бизнес-рекомендации. Работаю с полным циклом аналитики:
+            от сбора и очистки данных до визуализации и деплоя ML-моделей.
+          </p>
+          <p>
+            Особый интерес — продуктовая аналитика и прогнозирование. Люблю
+            задачи, где данные напрямую влияют на бизнес-решения: анализ
+            поведения пользователей, прогнозирование оттока, оптимизация
+            воронок и A/B-тестирование.
+          </p>
+          <div class="about-stats">
+            <div class="stat-card">
+              <div class="stat-number">10+</div>
+              <div class="stat-label">Проектов</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">5+</div>
+              <div class="stat-label">ML-моделей</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number">7</div>
+              <div class="stat-label">Репозиториев</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-highlights reveal">
+          <div class="highlight-card">
+            <div class="highlight-icon">📊</div>
+            <h3>Продуктовая аналитика</h3>
+            <p>Анализ воронок, когортный анализ, метрики удержания, A/B-тесты — всё, что помогает продукту расти на
+              основе данных.</p>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">🤖</div>
+            <h3>Machine Learning</h3>
+            <p>Построение и деплой предсказательных моделей: от классификации и регрессии до ансамблей и оптимизации
+              гиперпараметров.</p>
+          </div>
+          <div class="highlight-card">
+            <div class="highlight-icon">📈</div>
+            <h3>Визуализация данных</h3>
+            <p>Создание наглядных дашбордов и отчётов с matplotlib, seaborn и Plotly, которые говорят на языке бизнеса.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== SKILLS =============== -->
+  <section class="skills" id="skills">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title">Навыки</h2>
+        <p class="section-subtitle">Технологии и инструменты, с которыми я работаю</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-icon">🐍</div>
+          <div class="skill-name">Python</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 92%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🐼</div>
+          <div class="skill-name">Pandas</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 90%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🔢</div>
+          <div class="skill-name">NumPy</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🤖</div>
+          <div class="skill-name">Scikit-learn</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 88%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">📊</div>
+          <div class="skill-name">Matplotlib</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 90%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🎨</div>
+          <div class="skill-name">Seaborn</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 88%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">📓</div>
+          <div class="skill-name">Jupyter</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 92%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🗄️</div>
+          <div class="skill-name">SQL</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 82%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">📉</div>
+          <div class="skill-name">Plotly</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 78%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🔀</div>
+          <div class="skill-name">Git</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">📊</div>
+          <div class="skill-name">Power BI</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 75%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🧠</div>
+          <div class="skill-name">Statistics</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 80%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🦅</div>
+          <div class="skill-name">Apache Superset</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 76%"></div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">⚡</div>
+          <div class="skill-name">Apache Spark</div>
+          <div class="skill-level">
+            <div class="skill-level-bar" style="--level: 74%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== PORTFOLIO =============== -->
+  <section class="portfolio" id="portfolio">
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title">Портфолио</h2>
+        <p class="section-subtitle">Проекты по аналитике данных и машинному обучению</p>
+      </div>
+      <div class="portfolio-grid">
+
+        <!-- Project 1: Amazon Sales Analysis -->
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <div class="project-thumb-bg" style="background: linear-gradient(135deg, #1e1b4b, #312e81);">
+              <div class="gradient-overlay"
+                style="background: linear-gradient(180deg, transparent 50%, rgba(10,10,26,0.9));"></div>
+              <div class="project-icon">🛒</div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>Amazon Sales Analysis</h3>
+            <p>EDA-анализ продаж Amazon: очистка данных, визуализация распределений по категориям, анализ связи скидок и
+              рейтингов, выявление проблемных товаров и бизнес-рекомендации.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Pandas</span>
+              <span class="project-tag">Matplotlib</span>
+              <span class="project-tag">Seaborn</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/LA488/Amazon-sales-analysis" target="_blank" class="project-link">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Telco Customer Churn -->
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <div class="project-thumb-bg" style="background: linear-gradient(135deg, #134e4a, #0f766e);">
+              <div class="gradient-overlay"
+                style="background: linear-gradient(180deg, transparent 50%, rgba(10,10,26,0.9));"></div>
+              <div class="project-icon">📉</div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>Telco Customer Churn Prediction</h3>
+            <p>Прогнозирование оттока клиентов телеком-компании: EDA, обучение ML-моделей (Logistic Regression, Random
+              Forest, и др.), сравнение метрик и GUI-приложение на Tkinter.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Scikit-learn</span>
+              <span class="project-tag">Pandas</span>
+              <span class="project-tag">Tkinter</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/LA488/telco-customer-churn" target="_blank" class="project-link">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Product Metrics Dashboard -->
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <div class="project-thumb-bg" style="background: linear-gradient(135deg, #4c1d95, #7c3aed);">
+              <div class="gradient-overlay"
+                style="background: linear-gradient(180deg, transparent 50%, rgba(10,10,26,0.9));"></div>
+              <div class="project-icon">📊</div>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>Product Metrics & Funnel Analysis</h3>
+            <p>Продуктовая аналитика e-commerce: когортный анализ, расчёт LTV и retention, анализ воронки конверсий,
+              A/B-тестирование и визуализация ключевых бизнес-метрик.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Pandas</span>
+              <span class="project-tag">Plotly</span>
+              <span class="project-tag">Statistics</span>
+            </div>
+            <div class="project-links">
+              <a href="https://github.com/LA488" target="_blank" class="project-link">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== CONTACT =============== -->
+  <section class="contact" id="contact">
+    <div class="orb orb-3"></div>
+    <div class="container">
+      <div class="reveal">
+        <h2 class="section-title">Контакт</h2>
+        <p class="section-subtitle">Есть задача по аналитике данных? Давайте обсудим!</p>
+      </div>
+      <div class="contact-grid">
+
+        <div class="contact-info-cards reveal">
+          <div class="contact-card">
+            <div class="contact-card-icon">📧</div>
+            <div class="contact-card-text">
+              <h4>Email</h4>
+              <p>artur.lim90@gmail.com</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">🐙</div>
+            <div class="contact-card-text">
+              <h4>GitHub</h4>
+              <p><a href="https://github.com/LA488" target="_blank"
+                  style="color: var(--accent-2); text-decoration: none;">github.com/LA488</a></p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">💼</div>
+            <div class="contact-card-text">
+              <h4>Статус</h4>
+              <p>Открыт к офферам и проектам</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-card-icon">📱</div>
+            <div class="contact-card-text">
+              <h4>Telegram</h4>
+              <p>@iamarturlim</p>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form reveal" id="contact-form">
+          <div class="form-group">
+            <label for="name">Имя</label>
+            <input type="text" id="name" placeholder="Как вас зовут?" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Сообщение</label>
+            <textarea id="message" placeholder="Расскажите о вашей задаче по аналитике…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Отправить сообщение <span>→</span></button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============== FOOTER =============== -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-copy">© 2026 <span class="gradient-text">AL.</span> Все права защищены.</p>
+      <div class="footer-links">
+        <a href="#about">Обо мне</a>
+        <a href="#skills">Навыки</a>
+        <a href="#portfolio">Портфолио</a>
+        <a href="#contact">Контакт</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
