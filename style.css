@@ -31,6 +31,17 @@
   --section-padding: 100px 0;
 }
 
+/* ---------- Light Mode Variables ---------- */
+.light-mode {
+  --bg-dark: #f8fafc;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-border-hover: rgba(0, 0, 0, 0.1);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+}
+
 /* ---------- Reset & Base ---------- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 16px; }
@@ -144,10 +155,46 @@ ul { list-style: none; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ---------- Buttons ---------- */
+/* ---------- Buttons ---------- */
 .btn {
   display: inline-flex; align-items: center; gap: 10px; font-size: 0.95rem; font-weight: 600;
   padding: 14px 28px; border-radius: 12px; transition: var(--transition); cursor: pointer; border: 1px solid transparent;
+  font-family: inherit;
 }
+
+.nav-cv {
+  padding: 8px 16px; 
+  border-radius: 8px; 
+  background: rgba(255, 255, 255, 0.05); 
+  border: 1px solid var(--glass-border);
+  font-size: 0.8rem !important; 
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  transition: var(--transition);
+}
+.nav-cv:hover { background: white; color: #030305 !important; transform: translateY(-2px); }
+
+.nav-actions { display: flex; align-items: center; gap: 16px; }
+
+.theme-toggle {
+  background: transparent; border: none; cursor: pointer;
+  color: var(--text-secondary); width: 40px; height: 40px;
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  transition: var(--transition); border: 1px solid transparent;
+}
+.theme-toggle:hover { 
+  background: rgba(255,255,255,0.05);
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+}
+.theme-toggle svg { width: 20px; height: 20px; position: absolute; transition: 0.5s; }
+
+.sun { opacity: 0; transform: rotate(90deg) scale(0); }
+.moon { opacity: 1; transform: rotate(0) scale(1); }
+
+.light-mode .sun { opacity: 1; transform: rotate(0) scale(1); }
+.light-mode .moon { opacity: 0; transform: rotate(-90deg) scale(0); }
+
 .btn-primary { 
   background: #ffffff; 
   color: #030305;

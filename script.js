@@ -76,6 +76,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ——— Theme Switcher ———
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  // Check saved preference
+  if (localStorage.getItem('theme') === 'light') {
+    body.classList.add('light-mode');
+  }
+
+  themeToggle?.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    const isLight = body.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  });
+
+
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       hamburger?.classList.remove('active');
