@@ -464,7 +464,8 @@ ul { list-style: none; }
 @media (max-width: 1100px) {
   :root { --section-padding: 80px 0; }
   .hero h1 { font-size: 4rem; }
-  .about-grid, .contact-grid { gap: 40px; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; } /* Stack earlier */
+  .contact-grid { gap: 40px; }
   .portfolio-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -478,7 +479,6 @@ ul { list-style: none; }
   .social-circle { width: 50px; height: 50px; }
   .social-circle svg { width: 20px; height: 20px; }
 
-  .about-grid { grid-template-columns: 1fr; gap: 48px; }
   .about-stats { gap: 32px; flex-wrap: wrap; }
   .stat-number { font-size: 2.5rem; }
   
@@ -490,14 +490,22 @@ ul { list-style: none; }
   .contact-grid { grid-template-columns: 1fr; gap: 48px; }
   .contact-form { padding: 32px 24px; }
 
-  .navbar { width: calc(100% - 32px); top: 16px; padding: 12px 20px; }
-  .nav-links { display: none; } /* Could be a mobile menu later */
+  .navbar { 
+    width: auto; 
+    left: 16px; 
+    right: 16px; 
+    transform: none; 
+    top: 16px; 
+    padding: 12px 20px; 
+  }
+  .nav-links { display: none; }
 }
 
 @media (max-width: 480px) {
-  .hero h1 { font-size: 2.5rem; }
+  .hero h1 { font-size: 2.2rem; letter-spacing: -1px; } /* Smaller H1 for small phones */
   .hero-buttons { flex-direction: column; width: 100%; }
   .btn { width: 100%; justify-content: center; }
   .about-stats { justify-content: space-between; gap: 16px; }
+  .stat-number { font-size: 2rem; }
 }
 
