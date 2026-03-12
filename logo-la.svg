@@ -1,0 +1,41 @@
+<svg width="100" height="40" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .logo-path {
+      stroke: url(#logo-grad);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.9;
+    }
+    .logo-dot {
+      fill: #ec4899;
+      filter: url(#dot-glow);
+      offset-path: path('M30 8V32H42L58 8L74 32');
+      animation: flow-trajectory 4s infinite ease-in-out alternate;
+    }
+    @keyframes flow-trajectory {
+      0% { offset-distance: 0%; }
+      100% { offset-distance: 100%; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+  </style>
+  
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <filter id="dot-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <path class="logo-path" d="M30 8V32H48" opacity="0.1" stroke="#ffffff" stroke-width="1" /> <!-- Subtle guide path -->
+  <path class="logo-path" d="M30 8V32H42" />
+  <path class="logo-path" d="M42 32L58 8L74 32" />
+  <circle class="logo-dot" r="2.5" />
+</svg>

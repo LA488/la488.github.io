@@ -33,13 +33,13 @@
 
 /* ---------- Light Mode Variables ---------- */
 .light-mode {
-  --bg-dark: #f8fafc;
-  --glass-bg: rgba(255, 255, 255, 0.7);
+  --bg-dark: #dde1e7;
+  --glass-bg: rgba(255, 255, 255, 0.85);
   --glass-border: rgba(0, 0, 0, 0.05);
   --glass-border-hover: rgba(0, 0, 0, 0.1);
   --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-secondary: #2d3748;
+  --text-muted: #4a5568;
 }
 
 /* ---------- Reset & Base ---------- */
@@ -140,11 +140,39 @@ ul { list-style: none; }
 }
 
 .nav-logo { 
-  font-size: 1.25rem; font-weight: 800; letter-spacing: -1px; 
-  background: linear-gradient(135deg, #fff, #94a3b8); 
-  -webkit-background-clip: text; background-clip: text; 
-  -webkit-text-fill-color: transparent; 
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
+}
+
+.logo-svg {
+  width: 80px;
+  height: 32px;
+  transition: var(--transition);
+  filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.2));
+}
+
+.nav-logo:hover .logo-svg {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.4));
+}
+
+.logo-path {
+  transition: var(--transition);
+  opacity: 0.9;
+}
+
+.logo-dot {
+  offset-path: path('M30 8V32H42L58 8L74 32');
+  animation: flow-trajectory 4s infinite ease-in-out alternate;
+  filter: drop-shadow(0 0 8px var(--accent-vibrant));
+  offset-rotate: auto;
+}
+
+@keyframes flow-trajectory {
+  0% { offset-distance: 0%; }
+  100% { offset-distance: 100%; }
 }
 .nav-links { display: flex; gap: 32px; align-items: center; }
 .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); transition: var(--transition); white-space: nowrap; }

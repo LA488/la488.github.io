@@ -24,7 +24,19 @@
   <!-- =============== NAVIGATION =============== -->
   <nav class="navbar" id="navbar">
     <div class="container">
-      <a href="#home" class="nav-logo">AL.</a>
+      <a href="#home" class="nav-logo" aria-label="Arthur Lim Home">
+        <svg class="logo-svg" viewBox="0 0 100 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="logo-path l-stroke" d="M30 8V32H48" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="logo-path a-stroke" d="M42 32L58 8L74 32" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle class="logo-dot" r="2.5" fill="var(--accent-vibrant)" />
+          <defs>
+            <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--accent-primary)" />
+              <stop offset="100%" stop-color="var(--accent-secondary)" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </a>
       <div class="nav-links" id="nav-links">
         <a href="#home">Home</a>
         <a href="#about">About</a>
