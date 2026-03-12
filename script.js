@@ -80,9 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('theme-toggle');
   const body = document.body;
 
-  // Check saved preference
-  if (localStorage.getItem('theme') === 'light') {
+  // Check saved preference: Default is 'dark'
+  const savedTheme = localStorage.getItem('theme');
+  
+  if (savedTheme === 'light') {
     body.classList.add('light-mode');
+  } else if (!savedTheme) {
+    // If no theme is saved, we explicitly treat it as dark
+    localStorage.setItem('theme', 'dark');
   }
 
   themeToggle?.addEventListener('click', () => {
