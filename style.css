@@ -590,6 +590,7 @@ ul { list-style: none; }
 
   .portfolio-grid { grid-template-columns: 1fr; }
   .contact-grid { display: flex; flex-direction: column; gap: 48px; }
+  .contact-info, .contact-form { width: 100%; }
   .contact-form { padding: 32px 24px; }
 }
 
