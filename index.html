@@ -9,10 +9,21 @@
   <title>Arthur Lim — Data Analyst & ML Engineer</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
+  <!-- Lenis CSS -->
+  <style>
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-scrolling iframe { pointer-events: none; }
+  </style>
 </head>
 
 <body id="home">
-
+  
+  <!-- Noise Texture Overlay -->
+  <div class="noise-overlay"></div>
+  
   <!-- Background Mesh Gradients -->
   <div class="bg-blobs">
     <div class="blob blob-1"></div>
@@ -167,164 +178,32 @@
         <h2 class="section-title">My Toolkit</h2>
         <p class="section-subtitle">Technologies and tools I work with</p>
       </div>
-      <div class="skills-grid">
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Python</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 92%"></div>
-          </div>
+      <div class="marquee-container reveal">
+        <div class="marquee-track">
+          <!-- First set of items -->
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" alt="ML"><span>Scikit-Learn</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="SQL"><span>PostgreSQL</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas"><span>Pandas</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span>TensorFlow</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
+          <div class="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" alt="Spark"><span>Apache Spark</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
+          <div class="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI"><span>Power BI</span></div>
+          <!-- Duplicated set for seamless loop -->
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python"><span>Python</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" alt="ML"><span>Scikit-Learn</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="SQL"><span>PostgreSQL</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas"><span>Pandas</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" alt="TensorFlow"><span>TensorFlow</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg" alt="PyTorch"><span>PyTorch</span></div>
+          <div class="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" alt="Spark"><span>Apache Spark</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker"><span>Docker</span></div>
+          <div class="marquee-item"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
+          <div class="marquee-item"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI"><span>Power BI</span></div>
         </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" alt="NumPy"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">NumPy</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 85%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="Pandas"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Pandas</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 90%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="seaborn.svg" alt="Seaborn" width="36" height="36" />
-          </div>
-          <div class="skill-name">Seaborn</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 88%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg"
-              alt="Scikit-learn" width="36" height="36" />
-          </div>
-          <div class="skill-name">Scikit-learn</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 88%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg"
-              alt="TensorFlow" width="36" height="36" />
-          </div>
-          <div class="skill-name">TensorFlow</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 80%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg"
-              alt="PyTorch" width="36" height="36" />
-          </div>
-          <div class="skill-name">PyTorch</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 80%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="superset.svg" alt="Apache Superset" width="36" height="36" />
-          </div>
-          <div class="skill-name">Superset</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 76%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" alt="Power BI"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Power BI</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 75%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg"
-              alt="Jupyter" width="36" height="36" />
-          </div>
-          <div class="skill-name">Jupyter</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 92%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
-              alt="SQL" width="36" height="36" />
-          </div>
-          <div class="skill-name">SQL</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 82%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" alt="Apache Spark"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Spark</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 74%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Git</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 85%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="excel.jpg" alt="Excel" width="36" height="36" />
-          </div>
-          <div class="skill-name">Excel</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 80%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Docker</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 70%"></div>
-          </div>
-        </div>
-        <div class="skill-card reveal">
-          <div class="skill-icon">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux"
-              width="36" height="36" />
-          </div>
-          <div class="skill-name">Linux</div>
-          <div class="skill-level">
-            <div class="skill-level-bar" style="--level: 75%"></div>
-          </div>
-        </div>
+      </div>
       </div>
     </div>
   </section>
@@ -341,39 +220,58 @@
         <!-- Project 1: Amazon Sales Analysis -->
         <div class="project-card reveal">
           <div class="project-thumb">
-            <div class="project-icon">🛒</div>
+            <img src="assets/images/amazon-sales.png" alt="Amazon Sales Analysis">
           </div>
           <div class="project-info">
             <h3>Amazon Sales Analysis</h3>
-            <p>EDA of Amazon sales data: data cleaning, visualization of category distributions, analysis of the
-              relationship between discounts and ratings, and business recommendations.</p>
+            <p>EDA of Amazon sales data: cleaning, visualization, and rating analysis.</p>
             <div class="project-tags">
               <span class="project-tag">Python</span>
               <span class="project-tag">Pandas</span>
-              <span class="project-tag">Matplotlib</span>
               <span class="project-tag">Seaborn</span>
             </div>
-            <a href="https://github.com/LA488/Amazon-sales-analysis" target="_blank" class="social-circle" style="width: 50px; height: 50px;" aria-label="GitHub Repo">
+            <a href="https://github.com/LA488/Amazon-sales-analysis" target="_blank" class="project-link">
+              View on GitHub
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             </a>
           </div>
         </div>
 
-        <!-- Project 2: Telco Customer Churn -->
+        <!-- Project 2: IMDb Movie Recommendation System -->
         <div class="project-card reveal">
           <div class="project-thumb">
-            <div class="project-icon">📉</div>
+            <img src="assets/images/imdb-recommender.png" alt="IMDb Recommendation System">
           </div>
           <div class="project-info">
-            <h3>Telco Customer Churn Prediction</h3>
-            <p>Predicting customer churn for a telecom company: EDA, training ML models (Logistic Regression, Random
-              Forest), metric comparison, and business strategy.</p>
+            <h3>IMDb Recommendation System</h3>
+            <p>Content-based movie recommender using TF-IDF and Cosine Similarity, deployed with FastAPI.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">FastAPI</span>
+              <span class="project-tag">Scikit-learn</span>
+            </div>
+            <a href="https://github.com/LA488/IMDb-Movie-Recommendation-System" target="_blank" class="project-link">
+              View on GitHub
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 3: Telco Customer Churn -->
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <img src="assets/images/churn-prediction.png" alt="Customer Churn Prediction">
+          </div>
+          <div class="project-info">
+            <h3>Customer Churn Prediction</h3>
+            <p>Predicting customer churn for a telecom company: EDA, Logistic Regression, and Random Forest.</p>
             <div class="project-tags">
               <span class="project-tag">Python</span>
               <span class="project-tag">Scikit-learn</span>
-              <span class="project-tag">Pandas</span>
+              <span class="project-tag">TKinter</span>
             </div>
-            <a href="https://github.com/LA488/telco-customer-churn" target="_blank" class="social-circle" style="width: 50px; height: 50px;" aria-label="GitHub Repo">
+            <a href="https://github.com/LA488/telco-customer-churn" target="_blank" class="project-link">
+              View on GitHub
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             </a>
           </div>
@@ -446,6 +344,7 @@
     </div>
   </footer>
 
+  <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
   <script src="script.js"></script>
 </body>
 
