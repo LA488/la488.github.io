@@ -876,3 +876,17 @@ section {
   .stat-number { font-size: 2rem; }
 }
 
+/* ---------- Final Authority Overflow Lock ---------- */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  position: relative !important;
+}
+
+/* Fix for modern browsers where hidden isn't enough on root */
+@supports (overflow: clip) {
+  html, body {
+    overflow-x: clip !important;
+  }
+}
+
