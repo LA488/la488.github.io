@@ -347,53 +347,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ——— Magnetic Buttons ———
-  const magneticButtons = document.querySelectorAll('.btn, .social-circle, .nav-links a');
+  const magneticButtons = document.querySelectorAll('.btn, .social-circle, .nav-links a, .magnetic-btn');
   magneticButtons.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
       
-      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      const intensity = btn.classList.contains('magnetic-btn') ? 0.4 : 0.3;
+      btn.style.transform = `translate(${x * intensity}px, ${y * intensity}px)`;
     });
     
     btn.addEventListener('mouseleave', () => {
       btn.style.transform = `translate(0, 0)`;
     });
   });
-
-  // ——— Contact Form Mock Handler ———
-  const contactForm = document.getElementById('contact-form');
-  const messageArea = contactForm?.querySelector('textarea');
-
-  if (messageArea) {
-    messageArea.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = (this.scrollHeight) + 'px';
-    });
-  }
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      
-      submitBtn.textContent = 'Sending...';
-      submitBtn.disabled = true;
-
-      setTimeout(() => {
-        submitBtn.textContent = '✓ Message Sent!';
-        submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        contactForm.reset();
-        
-        setTimeout(() => {
-          submitBtn.textContent = originalText;
-          submitBtn.style.background = '';
-          submitBtn.disabled = false;
-        }, 3000);
-      }, 1500);
-    });
-  }
 
 });

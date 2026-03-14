@@ -791,133 +791,152 @@ section {
 
 .project-link svg { width: 18px; height: 18px; }
 
-/* ---------- CONTACT Section ---------- */
-.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--glass-border);
-  transition: var(--transition);
-}
-
-.contact-item:last-child { border-bottom: none; }
-
-.contact-icon-mini {
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
+/* ---------- CONTACT Section (Magnetic Universe) ---------- */
+.magnetic-contact-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  transition: var(--transition);
-  color: var(--text-secondary);
+  overflow: hidden;
+  border-radius: 32px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  margin-top: 40px;
 }
 
-.contact-icon-mini svg {
-  width: 20px;
-  height: 20px;
-  transition: var(--transition);
-}
-
-.contact-item:hover .contact-icon-mini {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--glass-border-hover);
-  color: var(--text-primary);
-}
-
-.contact-item:hover .contact-icon-mini svg {
-  transform: scale(1.1);
-}
-
-.contact-details {
+/* Kinetic Typography */
+.kinetic-typography {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 20px;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
 }
 
-.contact-label {
+.scrolling-text {
+  white-space: nowrap;
+  font-size: 8rem;
+  font-weight: 900;
+  font-family: var(--font-header);
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.05);
+  text-transform: uppercase;
+  animation: scroll-left 40s linear infinite;
+  will-change: transform;
+}
+
+.offset-text {
+  animation-duration: 50s;
+  animation-direction: reverse;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.08); /* slightly brighter */
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Light mode specific styling for kinetic typography */
+[data-theme="light"] .scrolling-text {
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.05); /* very faint dark stroke for light mode */
+}
+
+[data-theme="light"] .offset-text {
+  -webkit-text-stroke: 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Magnetic Elements Container */
+.magnetic-elements-container {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.magnetic-btn {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.4s ease, background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+  will-change: transform;
+}
+
+.magnetic-btn svg {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.4s ease;
+}
+
+.magnetic-label {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 600;
+  opacity: 0.7;
+  transition: opacity 0.4s ease;
 }
 
-.contact-value {
-  font-size: 1.1rem;
-  font-weight: 600;
+/* Hover Effects */
+.magnetic-btn:hover {
   color: var(--text-primary);
-  transition: var(--transition);
-}
-
-.contact-value:hover { color: var(--accent-secondary); }
-
-.contact-form {
-  background: rgba(15, 15, 20, 0.4);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 48px;
-}
-
-.form-group { margin-bottom: 24px; }
-
-.form-group label {
-  display: block;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
-
-.form-group input, .form-group textarea {
-  width: 100%; 
-  background: var(--glass-bg); 
-  border: 1px solid var(--glass-border);
-  border-radius: 12px; 
-  padding: 18px; 
-  color: white; 
-  transition: var(--transition);
-  font-family: var(--font-body);
-  backdrop-filter: blur(10px);
-}
-
-.form-group textarea {
-  resize: vertical; /* Only vertical resizing allowed */
-  min-height: 120px;
-  max-height: 400px;
-}
-
-.form-group input:focus, .form-group textarea:focus { 
-  border-color: var(--accent-primary); 
-  outline: none; 
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
   background: rgba(255, 255, 255, 0.05);
 }
 
-.btn-submit {
-  width: 100%;
-  background: white;
-  color: #030305;
-  justify-content: center;
-  border-radius: 12px;
-  padding: 18px;
-  margin-top: 12px;
-  font-weight: 700;
+.magnetic-btn:hover .magnetic-label {
+  opacity: 1;
 }
 
-.btn-submit:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+.magnetic-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Brand Colors */
+.btn-email:hover {
+  border-color: rgba(16, 185, 129, 0.6);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.btn-linkedin:hover {
+  border-color: rgba(10, 102, 194, 0.6);
+  box-shadow: 0 0 40px rgba(10, 102, 194, 0.2);
+  color: #0a66c2;
+}
+
+.btn-telegram:hover {
+  border-color: rgba(36, 161, 222, 0.6);
+  box-shadow: 0 0 40px rgba(36, 161, 222, 0.2);
+  color: #24a1de;
+}
+
+.btn-github:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
 }
 
 /* ---------- Responsive ---------- */
@@ -993,9 +1012,12 @@ section {
   .about-card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
 
   .portfolio-grid { grid-template-columns: 1fr; }
-  .contact-grid { display: flex; flex-direction: column; gap: 48px; }
-  .contact-info, .contact-form { width: 100%; }
-  .contact-form { padding: 32px 24px; }
+  
+  /* Magnetic Universe Mobile Scale */
+  .scrolling-text { font-size: 4rem; }
+  .magnetic-btn { width: 100px; height: 100px; }
+  .magnetic-btn svg { width: 24px; height: 24px; }
+  .magnetic-elements-container { padding: 20px; gap: 24px; }
 }
 
 @media (max-width: 480px) {
