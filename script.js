@@ -267,10 +267,12 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(animateMarquee);
 
     // Interaction Handlers
+    let lastDragX = 0;
+
     const startDrag = (e, x) => {
       isDragging = true;
       isPaused = true;
-      startX = x - currentX;
+      lastDragX = x;
       clearTimeout(interactionTimer);
       marqueeContainer.style.cursor = 'grabbing';
     };
@@ -281,7 +283,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // Prevent page scrolling on touch devices while dragging the marquee
       if (e.type === 'touchmove') e.preventDefault();
       
-      currentX = x - startX;
+      // Calculate delta and apply multiplier (faster on mobile)
+      const deltaX = x - lastDragX;
+      lastDragX = x;
+      
+      const dragMultiplier = window.innerWidth <= 768 ? 2.5 : 1.5;
+      currentX += deltaX * dragMultiplier;
       
       // Keep within loop bounds even during drag
       const fullWidth = trackWidth + 30;
