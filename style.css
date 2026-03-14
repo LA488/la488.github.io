@@ -1014,10 +1014,20 @@ section {
   .portfolio-grid { grid-template-columns: 1fr; }
   
   /* Magnetic Universe Mobile Scale */
-  .scrolling-text { font-size: 4rem; }
+  .scrolling-text { 
+    font-size: 4rem; 
+    /* Force GPU acceleration on mobile */
+    will-change: transform;
+    transform: translateZ(0);
+  }
   .magnetic-btn { width: 100px; height: 100px; }
   .magnetic-btn svg { width: 24px; height: 24px; }
   .magnetic-elements-container { padding: 20px; gap: 24px; }
+
+  /* Disable heavy animations on mobile for performance */
+  .blob {
+    animation: none !important;
+  }
 }
 
 @media (max-width: 480px) {

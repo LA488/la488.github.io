@@ -64,15 +64,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', updateStickyOffsets);
 
   // ——— Optimized Section Stacking Logic ———
-  let sectionMetrics = [];
+  let vh = window.innerHeight;
+  let isMobile = window.innerWidth <= 768;
 
-  function cacheSectionMetrics() {
+  const cacheSectionMetrics = () => {
     sectionMetrics = Array.from(sections).map(section => ({
       element: section,
       offsetTop: section.offsetTop,
       height: section.offsetHeight
     }));
-  }
+    vh = window.innerHeight;
+    isMobile = window.innerWidth <= 768;
+  };
 
   cacheSectionMetrics();
   window.addEventListener('resize', () => {
@@ -81,8 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   lenis.on('scroll', ({ scroll }) => {
-    const vh = window.innerHeight;
-
     sectionMetrics.forEach((metric, index) => {
       // Find the highest overlap from any section FOLLOWING this one
       let maxOverlap = 0;
@@ -99,12 +100,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const section = metric.element;
       if (maxOverlap > 0) {
         const scale = 1 - (maxOverlap * 0.1);
-        const blur = maxOverlap * 20; 
         const opacity = Math.max(0, 1 - (maxOverlap * 1.25)); 
         
         section.style.transform = `scale(${scale}) translateZ(0)`;
-        section.style.filter = `blur(${Math.min(blur, 15)}px)`; // Capped blur for perf
         section.style.opacity = opacity;
+        
+        // Mobile perf: disable expensive CSS blur on small screens
+        if (!isMobile) {
+          const blur = maxOverlap * 20; 
+          section.style.filter = `blur(${Math.min(blur, 15)}px)`;
+        } else {
+          section.style.filter = 'none';
+        }
         
         if (maxOverlap >= 0.95 || opacity <= 0.01) {
           if (section.style.visibility !== 'hidden') {
@@ -121,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Only reset if needed to avoid style thrashing
         if (section.style.opacity !== '1' || section.style.visibility !== 'visible') {
           section.style.transform = 'scale(1) translateZ(0)';
-          section.style.filter = 'blur(0px)';
+          section.style.filter = 'none';
           section.style.opacity = 1;
           section.style.visibility = 'visible';
           section.style.pointerEvents = 'auto';
@@ -346,21 +353,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ——— Magnetic Buttons ———
-  const magneticButtons = document.querySelectorAll('.btn, .social-circle, .nav-links a, .magnetic-btn');
-  magneticButtons.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+  // ——— Magnetic Buttons (Desktop Only) ———
+  if (window.matchMedia("(pointer: fine)").matches) {
+    const magneticButtons = document.querySelectorAll('.btn, .social-circle, .nav-links a, .magnetic-btn');
+    magneticButtons.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        const intensity = btn.classList.contains('magnetic-btn') ? 0.4 : 0.3;
+        btn.style.transform = `translate(${x * intensity}px, ${y * intensity}px)`;
+      });
       
-      const intensity = btn.classList.contains('magnetic-btn') ? 0.4 : 0.3;
-      btn.style.transform = `translate(${x * intensity}px, ${y * intensity}px)`;
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = `translate(0, 0)`;
+      });
     });
-    
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = `translate(0, 0)`;
-    });
-  });
+  }
 
 });
