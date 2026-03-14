@@ -245,18 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // We need the width of one set of items (the first half)
     let trackWidth = marqueeTrack.scrollWidth / 2;
 
+    let dragVelocity = 0;
+
     function animateMarquee(time) {
       if (!lastTime) lastTime = time;
       const delta = time - lastTime;
       lastTime = time;
 
-      if (!isDragging && !isPaused) {
-        currentX -= autoSpeed;
-        
-        // Seamless loop reset
-        if (Math.abs(currentX) >= trackWidth + 30) { // 30 is half the gap (60px)
-          currentX = 0;
+      if (!isDragging) {
+        if (Math.abs(dragVelocity) > 0.1) {
+          currentX += dragVelocity;
+          dragVelocity *= 0.92; // Friction factor
+        } else if (!isPaused) {
+          dragVelocity = 0;
+          currentX -= autoSpeed;
         }
+        
+        // Seamless loop reset bounds
+        const fullWidth = trackWidth + 30;
+        if (currentX > 0) currentX -= fullWidth;
+        else if (Math.abs(currentX) >= fullWidth) currentX += fullWidth;
         
         marqueeTrack.style.transform = `translateX(${currentX}px)`;
       }
@@ -273,6 +281,7 @@ document.addEventListener('DOMContentLoaded', () => {
       isDragging = true;
       isPaused = true;
       lastDragX = x;
+      dragVelocity = 0; // Stop any existing momentum
       clearTimeout(interactionTimer);
       marqueeContainer.style.cursor = 'grabbing';
     };
@@ -288,12 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
       lastDragX = x;
       
       const dragMultiplier = window.innerWidth <= 768 ? 2.5 : 1.5;
-      currentX += deltaX * dragMultiplier;
+      const movement = deltaX * dragMultiplier;
+      currentX += movement;
+      dragVelocity = movement; // Record velocity for momentum upon release
       
       // Keep within loop bounds even during drag
       const fullWidth = trackWidth + 30;
-      if (currentX > 0) currentX = -fullWidth;
-      if (Math.abs(currentX) > fullWidth) currentX = 0;
+      if (currentX > 0) currentX -= fullWidth;
+      else if (Math.abs(currentX) >= fullWidth) currentX += fullWidth;
       
       marqueeTrack.style.transform = `translateX(${currentX}px)`;
     };
