@@ -66,10 +66,7 @@
     radial-gradient(at 50% 50%, rgba(236, 72, 153, 0.05) 0px, transparent 50%);
 }
 
-html, body {
-  max-width: 100vw;
-  overflow-x: clip; 
-}
+
 
 .light-mode .section {
   backdrop-filter: blur(25px); /* Stronger frosted glass for day mode */
@@ -84,7 +81,7 @@ html, body {
 
 /* ---------- Reset & Base ---------- */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body { 
   margin: 0;
@@ -97,7 +94,6 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.6;
-  overflow-x: hidden;
   width: 100%;
   -webkit-font-smoothing: antialiased; 
   position: relative;
@@ -539,6 +535,7 @@ section {
 /* ---------- SKILLS Section (Infinite Marquee) ---------- */
 .marquee-container {
   width: 100%;
+  max-width: 100%;
   overflow: hidden;
   position: relative;
   padding: 40px 0;
