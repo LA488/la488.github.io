@@ -654,22 +654,51 @@ section {
 }
 
 .methodology-icon {
-  font-size: 2.5rem;
-  margin-bottom: 24px;
-  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* Floating animation */
+  animation: float-icon 4s ease-in-out infinite;
 }
 
+.methodology-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.4));
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+@keyframes float-icon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.methodology-card:nth-child(2) .methodology-icon { animation-delay: 1s; }
+.methodology-card:nth-child(3) .methodology-icon { animation-delay: 0.5s; }
+.methodology-card:nth-child(4) .methodology-icon { animation-delay: 1.5s; }
+
 .methodology-card h4 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 16px;
   color: var(--text-primary);
+  letter-spacing: -0.5px;
 }
 
 .methodology-card p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.6;
+}
+
+.methodology-card:hover .methodology-icon img {
+  transform: scale(1.15) rotate(5deg);
+  filter: drop-shadow(0 0 25px rgba(99, 102, 241, 0.6));
 }
 
 @media (max-width: 1024px) {
