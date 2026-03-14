@@ -63,43 +63,69 @@ document.addEventListener('DOMContentLoaded', () => {
   updateStickyOffsets();
   window.addEventListener('resize', updateStickyOffsets);
 
-  // ——— Section Stacking Logic ———
+  // ——— Optimized Section Stacking Logic ———
+  let sectionMetrics = [];
+
+  function cacheSectionMetrics() {
+    sectionMetrics = Array.from(sections).map(section => ({
+      element: section,
+      offsetTop: section.offsetTop,
+      height: section.offsetHeight
+    }));
+  }
+
+  cacheSectionMetrics();
+  window.addEventListener('resize', () => {
+    updateStickyOffsets();
+    cacheSectionMetrics();
+  });
+
   lenis.on('scroll', ({ scroll }) => {
-    sections.forEach((section, index) => {
+    const vh = window.innerHeight;
+
+    sectionMetrics.forEach((metric, index) => {
       // Find the highest overlap from any section FOLLOWING this one
       let maxOverlap = 0;
-      const vh = window.innerHeight;
 
-      for (let i = index + 1; i < sections.length; i++) {
-        const nextRect = sections[i].getBoundingClientRect();
-        const currentOverlap = Math.max(0, (vh - nextRect.top) / vh);
+      for (let i = index + 1; i < sectionMetrics.length; i++) {
+        const nextMetric = sectionMetrics[i];
+        // nextMetric.offsetTop is its position relative to parent (body)
+        // nextMetric.offsetTop - scroll is its position relative to viewport
+        const nextTop = nextMetric.offsetTop - scroll;
+        const currentOverlap = Math.max(0, (vh - nextTop) / vh);
         if (currentOverlap > maxOverlap) maxOverlap = currentOverlap;
       }
       
+      const section = metric.element;
       if (maxOverlap > 0) {
         const scale = 1 - (maxOverlap * 0.1);
         const blur = maxOverlap * 20; 
-        // Aggressive opacity fade: reached 0 at 80% overlap
         const opacity = Math.max(0, 1 - (maxOverlap * 1.25)); 
         
-        section.style.transform = `scale(${scale})`;
-        section.style.filter = `blur(${blur}px)`;
+        section.style.transform = `scale(${scale}) translateZ(0)`;
+        section.style.filter = `blur(${Math.min(blur, 15)}px)`; // Capped blur for perf
         section.style.opacity = opacity;
         
-        // Final hiding logic
         if (maxOverlap >= 0.95 || opacity <= 0.01) {
-          section.style.visibility = 'hidden';
-          section.style.pointerEvents = 'none';
+          if (section.style.visibility !== 'hidden') {
+            section.style.visibility = 'hidden';
+            section.style.pointerEvents = 'none';
+          }
         } else {
+          if (section.style.visibility !== 'visible') {
+            section.style.visibility = 'visible';
+            section.style.pointerEvents = 'auto';
+          }
+        }
+      } else {
+        // Only reset if needed to avoid style thrashing
+        if (section.style.opacity !== '1' || section.style.visibility !== 'visible') {
+          section.style.transform = 'scale(1) translateZ(0)';
+          section.style.filter = 'blur(0px)';
+          section.style.opacity = 1;
           section.style.visibility = 'visible';
           section.style.pointerEvents = 'auto';
         }
-      } else {
-        section.style.transform = 'scale(1)';
-        section.style.filter = 'blur(0px)';
-        section.style.opacity = 1;
-        section.style.visibility = 'visible';
-        section.style.pointerEvents = 'auto';
       }
     });
 
