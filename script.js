@@ -260,42 +260,58 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(animateMarquee);
 
     // Interaction Handlers
-    const startDrag = (x) => {
+    const startDrag = (e, x) => {
       isDragging = true;
+      isPaused = true;
       startX = x - currentX;
       clearTimeout(interactionTimer);
+      marqueeContainer.style.cursor = 'grabbing';
     };
 
-    const moveDrag = (x) => {
+    const moveDrag = (e, x) => {
       if (!isDragging) return;
+      
+      // Prevent page scrolling on touch devices while dragging the marquee
+      if (e.type === 'touchmove') e.preventDefault();
+      
       currentX = x - startX;
       
       // Keep within loop bounds even during drag
-      if (currentX > 0) currentX = -(trackWidth + 30);
-      if (Math.abs(currentX) > trackWidth + 30) currentX = 0;
+      const fullWidth = trackWidth + 30;
+      if (currentX > 0) currentX = -fullWidth;
+      if (Math.abs(currentX) > fullWidth) currentX = 0;
       
       marqueeTrack.style.transform = `translateX(${currentX}px)`;
     };
 
     const stopDrag = () => {
+      if (!isDragging) return;
       isDragging = false;
+      marqueeContainer.style.cursor = 'grab';
+      
       // Resume auto-scroll after 2 seconds of idleness
       interactionTimer = setTimeout(() => {
         isPaused = false;
       }, 2000);
     };
 
-    marqueeContainer.addEventListener('mousedown', (e) => startDrag(e.pageX));
-    window.addEventListener('mousemove', (e) => moveDrag(e.pageX));
+    // Mouse Events
+    marqueeContainer.addEventListener('mousedown', (e) => startDrag(e, e.pageX));
+    window.addEventListener('mousemove', (e) => moveDrag(e, e.pageX));
     window.addEventListener('mouseup', stopDrag);
 
-    marqueeContainer.addEventListener('touchstart', (e) => startDrag(e.touches[0].pageX));
-    window.addEventListener('touchmove', (e) => moveDrag(e.touches[0].pageX));
+    // Touch Events - Crucial to set passive: false to allow preventDefault()
+    marqueeContainer.addEventListener('touchstart', (e) => startDrag(e, e.touches[0].pageX), { passive: true });
+    window.addEventListener('touchmove', (e) => moveDrag(e, e.touches[0].pageX), { passive: false });
     window.addEventListener('touchend', stopDrag);
 
-    marqueeContainer.addEventListener('mouseenter', () => isPaused = true);
+    marqueeContainer.addEventListener('mouseenter', () => {
+      if (!isDragging) isPaused = true;
+    });
+    
     marqueeContainer.addEventListener('mouseleave', () => {
       if (!isDragging) {
+        clearTimeout(interactionTimer);
         interactionTimer = setTimeout(() => {
           isPaused = false;
         }, 1000);
