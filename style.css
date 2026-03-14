@@ -973,6 +973,7 @@ section {
   .nav-links a { font-size: 1.5rem; color: white; }
   
   .navbar { width: calc(100% - 32px); left: 16px; top: 16px; transform: none; padding: 12px 20px; }
+  .navbar .container { display: flex; justify-content: space-between; width: 100%; }
 }
 
 @media (max-width: 768px) {
