@@ -697,17 +697,31 @@ section {
   width: 48px;
   height: 48px;
   background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   transition: var(--transition);
+  color: var(--text-secondary);
+}
+
+.contact-icon-mini svg {
+  width: 20px;
+  height: 20px;
+  transition: var(--transition);
 }
 
 .contact-item:hover .contact-icon-mini {
-  transform: scale(1.1);
+  transform: translateY(-5px);
   background: rgba(255, 255, 255, 0.08);
+  border-color: var(--glass-border-hover);
+  color: var(--text-primary);
+}
+
+.contact-item:hover .contact-icon-mini svg {
+  transform: scale(1.1);
 }
 
 .contact-details {
