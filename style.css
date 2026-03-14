@@ -541,17 +541,20 @@ section {
   padding: 40px 0;
   mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  cursor: grab;
+  user-select: none;
+}
+
+.marquee-container:active {
+  cursor: grabbing;
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: scroll-marquee 40s linear infinite;
+  /* Animation handled by JS for interactivity */
   gap: 60px;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 .marquee-item {

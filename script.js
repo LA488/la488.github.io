@@ -222,7 +222,91 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
-  // ——— Infinite Marquee Handled by CSS ———
+  // ——— Interactive Infinite Marquee ———
+  const marqueeContainer = document.querySelector('.marquee-container');
+  const marqueeTrack = document.querySelector('.marquee-track');
+  
+  if (marqueeContainer && marqueeTrack) {
+    let currentX = 0;
+    let isDragging = false;
+    let startX = 0;
+    let autoSpeed = 0.5; // Pixels per frame
+    let lastTime = 0;
+    let isPaused = false;
+    let interactionTimer = null;
+
+    // We need the width of one set of items (the first half)
+    let trackWidth = marqueeTrack.scrollWidth / 2;
+
+    function animateMarquee(time) {
+      if (!lastTime) lastTime = time;
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (!isDragging && !isPaused) {
+        currentX -= autoSpeed;
+        
+        // Seamless loop reset
+        if (Math.abs(currentX) >= trackWidth + 30) { // 30 is half the gap (60px)
+          currentX = 0;
+        }
+        
+        marqueeTrack.style.transform = `translateX(${currentX}px)`;
+      }
+      
+      requestAnimationFrame(animateMarquee);
+    }
+
+    requestAnimationFrame(animateMarquee);
+
+    // Interaction Handlers
+    const startDrag = (x) => {
+      isDragging = true;
+      startX = x - currentX;
+      clearTimeout(interactionTimer);
+    };
+
+    const moveDrag = (x) => {
+      if (!isDragging) return;
+      currentX = x - startX;
+      
+      // Keep within loop bounds even during drag
+      if (currentX > 0) currentX = -(trackWidth + 30);
+      if (Math.abs(currentX) > trackWidth + 30) currentX = 0;
+      
+      marqueeTrack.style.transform = `translateX(${currentX}px)`;
+    };
+
+    const stopDrag = () => {
+      isDragging = false;
+      // Resume auto-scroll after 2 seconds of idleness
+      interactionTimer = setTimeout(() => {
+        isPaused = false;
+      }, 2000);
+    };
+
+    marqueeContainer.addEventListener('mousedown', (e) => startDrag(e.pageX));
+    window.addEventListener('mousemove', (e) => moveDrag(e.pageX));
+    window.addEventListener('mouseup', stopDrag);
+
+    marqueeContainer.addEventListener('touchstart', (e) => startDrag(e.touches[0].pageX));
+    window.addEventListener('touchmove', (e) => moveDrag(e.touches[0].pageX));
+    window.addEventListener('touchend', stopDrag);
+
+    marqueeContainer.addEventListener('mouseenter', () => isPaused = true);
+    marqueeContainer.addEventListener('mouseleave', () => {
+      if (!isDragging) {
+        interactionTimer = setTimeout(() => {
+          isPaused = false;
+        }, 1000);
+      }
+    });
+
+    // Handle resize to update trackWidth
+    window.addEventListener('resize', () => {
+      trackWidth = marqueeTrack.scrollWidth / 2;
+    });
+  }
 
   // ——— 3D Tilt Effect for Project Cards ———
   const projectCards = document.querySelectorAll('.project-card');
