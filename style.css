@@ -911,8 +911,10 @@ section {
 .contact-availability {
   position: absolute;
   top: 48px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -959,7 +961,7 @@ section {
     gap: 8px;
     width: 90%;
     max-width: 400px;
-    transform: translateX(-50%);
+    margin: 0 auto;
     text-wrap: balance;
   }
 }
