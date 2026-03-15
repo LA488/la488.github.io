@@ -195,10 +195,12 @@ section {
   padding: 120px 0;
   background: var(--section-bg);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 10;
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
-              filter 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-              opacity 0.6s ease;
+  /* CRITICAL PERF FIX: Only transition transform. 
+     filter & opacity are set by JS per-frame — having them in transition
+     creates a chain of 60/s animation restarts = paint storm */
+  transition: transform 0.1s linear;
   will-change: transform, filter, opacity;
   backface-visibility: hidden;
   transform: translateZ(0);
@@ -1013,21 +1015,32 @@ section {
 
   .portfolio-grid { grid-template-columns: 1fr; }
   
+  /* PERF FIX: backdrop-filter on every stacked section kills mobile GPUs.
+     Replace with a simple solid background that looks identical visually. */
+  section {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(3, 3, 5, 0.92) !important;
+  }
+
+  .light-mode section {
+    background: rgba(248, 250, 252, 0.95) !important;
+  }
+
+  /* PERF FIX: Blobs paused on mobile — JS was overriding transform anyway */
+  .blob {
+    animation-play-state: paused !important;
+    transform: none !important;
+  }
+  
   /* Magnetic Universe Mobile Scale */
   .scrolling-text { 
-    font-size: 4rem; 
-    /* Force GPU acceleration on mobile */
+    font-size: 4rem;
     will-change: transform;
-    transform: translateZ(0);
   }
   .magnetic-btn { width: 100px; height: 100px; }
   .magnetic-btn svg { width: 24px; height: 24px; }
   .magnetic-elements-container { padding: 20px; gap: 24px; }
-
-  /* Disable heavy animations on mobile for performance */
-  .blob {
-    animation: none !important;
-  }
 }
 
 @media (max-width: 480px) {

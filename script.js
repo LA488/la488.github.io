@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // ——— Lenis Smooth Scroll Initialization ———
   const lenis = new Lenis({
-    duration: 1.2,
+    duration: 0.8,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
     wheelMultiplier: 1,
@@ -27,20 +27,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ——— Dynamic Parallax & Background Bloom ———
+  // PERF FIX: Only run on desktop pointer devices.
+  // rotate() + scale() on blobs causes non-composited paint storms — use translate only.
   const blobs = document.querySelectorAll('.blob');
-  window.addEventListener('mousemove', (e) => {
-    const { clientX, clientY } = e;
-    const x = clientX / window.innerWidth;
-    const y = clientY / window.innerHeight;
-    
-    blobs.forEach((blob, index) => {
-      const speed = (index + 1) * 35;
-      const moveX = (x - 0.5) * speed;
-      const moveY = (y - 0.5) * speed;
-      // Added subtle rotation and scale for depth
-      blob.style.transform = `translate(${moveX}px, ${moveY}px) scale(${1 + x * 0.1}) rotate(${x * 10}deg)`;
+  if (window.matchMedia('(pointer: fine)').matches) {
+    window.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      const x = clientX / window.innerWidth;
+      const y = clientY / window.innerHeight;
+      
+      blobs.forEach((blob, index) => {
+        const speed = (index + 1) * 25;
+        const moveX = (x - 0.5) * speed;
+        const moveY = (y - 0.5) * speed;
+        // translate only — keeps blobs on their own GPU layer without causing paint
+        blob.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      });
     });
-  });
+  }
 
   // ——— Hybrid Stacking & Internal Scroll ———
   const sections = document.querySelectorAll('section');
@@ -66,12 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // ——— Optimized Section Stacking Logic ———
   let vh = window.innerHeight;
   let isMobile = window.innerWidth <= 768;
+  let sectionMetrics = [];
 
   const cacheSectionMetrics = () => {
     sectionMetrics = Array.from(sections).map(section => ({
       element: section,
       offsetTop: section.offsetTop,
-      height: section.offsetHeight
+      height: section.offsetHeight,
+      wasHidden: false  // Track visibility state to avoid repeated DOM writes
     }));
     vh = window.innerHeight;
     isMobile = window.innerWidth <= 768;
@@ -100,36 +106,35 @@ document.addEventListener('DOMContentLoaded', () => {
       const section = metric.element;
       if (maxOverlap > 0) {
         const scale = 1 - (maxOverlap * 0.1);
-        const opacity = Math.max(0, 1 - (maxOverlap * 1.25)); 
+        const opacity = Math.max(0, 1 - (maxOverlap * 1.25));
         
+        // Write transform & opacity directly — no CSS transition, no cascade storm
         section.style.transform = `scale(${scale}) translateZ(0)`;
         section.style.opacity = opacity;
         
-        // Mobile perf: disable expensive CSS blur on small screens
-        if (!isMobile) {
-          const blur = maxOverlap * 20; 
-          section.style.filter = `blur(${Math.min(blur, 15)}px)`;
-        } else {
-          section.style.filter = 'none';
-        }
+        // Blur: on desktop full 15px, on mobile lighter 8px (restored but cheaper)
+        const maxBlur = isMobile ? 8 : 15;
+        const blur = maxOverlap * (isMobile ? 12 : 20);
+        section.style.filter = `blur(${Math.min(blur, maxBlur)}px)`;
         
-        if (maxOverlap >= 0.95 || opacity <= 0.01) {
-          if (section.style.visibility !== 'hidden') {
-            section.style.visibility = 'hidden';
-            section.style.pointerEvents = 'none';
-          }
-        } else {
-          if (section.style.visibility !== 'visible') {
-            section.style.visibility = 'visible';
-            section.style.pointerEvents = 'auto';
-          }
+        // PERF FIX: Only toggle visibility when crossing threshold, not every frame
+        const shouldHide = maxOverlap >= 0.95 || opacity <= 0.01;
+        if (shouldHide && !metric.wasHidden) {
+          metric.wasHidden = true;
+          section.style.visibility = 'hidden';
+          section.style.pointerEvents = 'none';
+        } else if (!shouldHide && metric.wasHidden) {
+          metric.wasHidden = false;
+          section.style.visibility = 'visible';
+          section.style.pointerEvents = 'auto';
         }
       } else {
-        // Only reset if needed to avoid style thrashing
-        if (section.style.opacity !== '1' || section.style.visibility !== 'visible') {
+        // Only reset if section was previously affected
+        if (metric.wasHidden || section.style.opacity !== '') {
+          metric.wasHidden = false;
           section.style.transform = 'scale(1) translateZ(0)';
           section.style.filter = 'none';
-          section.style.opacity = 1;
+          section.style.opacity = '';
           section.style.visibility = 'visible';
           section.style.pointerEvents = 'auto';
         }
