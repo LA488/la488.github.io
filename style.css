@@ -949,12 +949,18 @@ section {
 
 @media (max-width: 768px) {
   .contact-availability {
-    top: 32px;
-    padding: 10px 16px;
-    font-size: 0.8rem;
+    top: 24px;
+    padding: 12px 20px;
+    font-size: 0.85rem;
     white-space: normal;
     text-align: center;
-    width: 85%;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    width: 90%;
+    max-width: 400px;
+    transform: translateX(-50%);
+    text-wrap: balance;
   }
 }
 
