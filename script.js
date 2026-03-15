@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ——— Typed Role Effect ———
   const typedRole = document.getElementById('typed-role');
-  const roles = ['Data Analyst', 'ML Engineer', 'Product Analyst', 'Predictive Modeler'];
+  const roles = ['Data Analyst', 'ML Engineer', 'Data Scientist', 'Product Analyst'];
   let roleIdx = 0, charIdx = 0, isDeleting = false;
 
   function type() {
