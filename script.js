@@ -99,7 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // nextMetric.offsetTop is its position relative to parent (body)
         // nextMetric.offsetTop - scroll is its position relative to viewport
         const nextTop = nextMetric.offsetTop - scroll;
-        const currentOverlap = Math.max(0, (vh - nextTop) / vh);
+        let currentOverlap = Math.max(0, (vh - nextTop) / vh);
+        
+        // Add scroll buffer: dead zone before transition starts
+        const buffer = 0.1;
+        currentOverlap = Math.max(0, (currentOverlap - buffer) / (1 - buffer));
+        
+        // Apply power curve for smoother transition entry
+        currentOverlap = Math.pow(currentOverlap, 1.2);
+        
         if (currentOverlap > maxOverlap) maxOverlap = currentOverlap;
       }
       
@@ -209,10 +217,55 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger?.classList.remove('active');
-      navLinks?.classList.remove('active');
+  // ——— Definitive Coordinate-Based Navigation ———
+  let sectionCoordinates = {};
+
+  const calculateSectionCoordinates = () => {
+    // Reset positions to ensure clean calculation
+    sectionCoordinates = { '#home': 0 };
+    
+    // We target all sections plus the footer (contact anchor)
+    const targets = ['about', 'experience', 'skills', 'portfolio', 'contact'];
+    
+    targets.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        // Use offsetTop: absolute document position unaffected by sticky/transforms
+        sectionCoordinates[`#${id}`] = el.offsetTop;
+      }
+    });
+  };
+
+  // Initial calculation and refresh on resize
+  // Small delay to ensure layout is settled
+  window.addEventListener('load', () => {
+    setTimeout(calculateSectionCoordinates, 100);
+  });
+  window.addEventListener('resize', calculateSectionCoordinates);
+
+  const navigationLinks = document.querySelectorAll('.nav-links a, .nav-logo, .hero-buttons a, .back-to-top');
+  
+  navigationLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        hamburger?.classList.remove('active');
+        navLinks?.classList.remove('active');
+        
+        // Get pre-calculated coordinate
+        const targetScroll = sectionCoordinates[targetId] !== undefined 
+          ? sectionCoordinates[targetId] 
+          : (targetId === '#home' ? 0 : document.querySelector(targetId)?.offsetTop || 0);
+        
+        lenis.scrollTo(targetScroll, {
+          offset: 0, // Zero offset for perfect section boundary alignment
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      }
     });
   });
 
@@ -354,27 +407,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ——— 3D Tilt Effect for Project Cards ———
-  const projectCards = document.querySelectorAll('.project-card');
-  projectCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / 10;
-      const rotateY = (centerX - x) / 10;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-    });
-  });
 
   // ——— Magnetic Buttons (Desktop Only) ———
   if (window.matchMedia("(pointer: fine)").matches) {
