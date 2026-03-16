@@ -428,8 +428,8 @@ section {
 .about-bio { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px; }
 .about-bio p { margin-bottom: 16px; }
 
-.about-stats { display: flex; gap: 24px; padding-top: 20px; border-top: 1px solid var(--glass-border); }
-.stat-item { display: flex; flex-direction: column; gap: 8px; }
+.about-stats { display: flex; justify-content: center; gap: 40px; padding-top: 24px; border-top: 1px solid var(--glass-border); }
+.stat-item { display: flex; flex-direction: column; gap: 8px; text-align: center; }
 .stat-number { font-size: 2.5rem; font-weight: 800; color: white; line-height: 1; letter-spacing: -1px; }
 .light-mode .stat-number { color: var(--text-primary); }
 .stat-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
@@ -490,7 +490,7 @@ section {
   display: flex; 
   align-items: center; 
   justify-content: center; 
-  padding: 40px 0; 
+  padding: 50px 0 40px; 
   position: sticky;
   top: 0;
 }
@@ -1276,9 +1276,10 @@ section {
 @media (max-width: 768px) {
   :root { --section-padding: 60px 0; }
   
-  .hero h1 { font-size: 3rem; letter-spacing: -1.5px; }
-  .hero-avatar { width: 150px; height: 150px; border-radius: 36px; margin-bottom: 32px; }
-  .hero .typed-role { font-size: 1.2rem; }
+  .hero { min-height: 100vh; padding: 50px 0 20px; }
+  .hero h1 { font-size: 3rem; letter-spacing: -1.5px; margin-bottom: 8px; }
+  .hero-avatar { width: 180px; height: 180px; border-radius: 40px; margin-bottom: 20px; }
+  .hero .typed-role { font-size: 1.1rem; margin-bottom: 12px; }
   .hero-socials { gap: 12px; }
   .social-circle { width: 50px; height: 50px; }
   .social-circle svg { width: 20px; height: 20px; }
@@ -1289,6 +1290,7 @@ section {
   .about-card { padding: 24px; gap: 16px; }
   .about-card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
 
+  .portfolio { padding-bottom: 340px !important; }
   .portfolio-grid { grid-template-columns: 1fr; }
   
   /* PERF FIX: backdrop-filter on every stacked section kills mobile GPUs.
@@ -1320,10 +1322,12 @@ section {
 }
 
 @media (max-width: 480px) {
-  .hero h1 { font-size: 2.1rem; letter-spacing: -1px; }
-  .hero-buttons { flex-direction: column; width: 100%; }
-  .btn { width: 100%; justify-content: center; }
-  .about-stats { justify-content: space-between; gap: 16px; }
+  .hero { padding: 50px 0 10px; }
+  .hero-avatar { width: 170px; height: 170px; border-radius: 36px; margin-bottom: 16px; }
+  .hero h1 { font-size: 2.1rem; letter-spacing: -1px; margin-bottom: 4px; }
+  .hero-buttons { flex-direction: column; width: 100%; gap: 8px; }
+  .btn { width: 100%; justify-content: center; height: 46px; }
+  .about-stats { justify-content: center; gap: 32px; }
   .stat-number { font-size: 2rem; }
 }
 
