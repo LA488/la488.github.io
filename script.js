@@ -91,6 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   lenis.on('scroll', ({ scroll }) => {
+    // RE-CALCULATE VH: Mobile address bars can change window.innerHeight without triggering resize
+    const currentVh = window.innerHeight;
+
     sectionMetrics.forEach((metric, index) => {
       // Find the highest overlap from any section FOLLOWING this one
       let maxOverlap = 0;
@@ -100,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // nextMetric.offsetTop is its position relative to parent (body)
         // nextMetric.offsetTop - scroll is its position relative to viewport
         const nextTop = nextMetric.offsetTop - scroll;
-        let currentOverlap = Math.max(0, (vh - nextTop) / vh);
+        let currentOverlap = Math.max(0, (currentVh - nextTop) / currentVh);
 
         // Add scroll buffer: dead zone before transition starts
         const buffer = 0.1;
@@ -227,29 +230,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Close mobile menu if open
         hamburger?.classList.remove('active');
         navLinks?.classList.remove('active');
+        document.body.style.overflow = ''; // Ensure body scroll is not locked
 
-        if (targetId === '#home') {
-          lenis.scrollTo(0, {
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-          });
-          return;
-        }
+        // Refresh metrics before scrolling to ensure accuracy on mobile
+        cacheSectionMetrics();
 
-        const metric = sectionMetrics.find(m => m.id === targetId);
-        
-        if (metric || targetId === '#home') {
-          // Use the static offsetTop captured during cacheSectionMetrics.
-          // This is untouched by sticky behavior or CSS transforms,
-          // ensuring perfect accuracy in both directions.
-          const targetScroll = targetId === '#home' ? 0 : metric.offsetTop;
+        // Update Hash without jump
+        history.pushState(null, null, targetId);
 
-          lenis.scrollTo(targetScroll, {
-            offset: 0,
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-          });
-        }
+        // Use Lenis to scroll to the element itself.
+        // This is dynamic and accounts for current height/sticky offsets.
+        lenis.scrollTo(targetId, {
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          // If we want a universal offset (e.g., for sticky header), we put it here
+          offset: 0 
+        });
       }
     });
   });

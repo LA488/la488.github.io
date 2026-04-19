@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:la488.github.io)",
+      "Bash(python -m http.server 8000)",
+      "Bash(magick -version)",
+      "Bash(convert -version)",
+      "Bash(python -c \"from PIL import Image; print\\('Pillow installed'\\)\")",
+      "Bash(python convert_svg.py)",
+      "Bash(python create_images.py)"
+    ]
+  }
+}
