@@ -419,7 +419,7 @@ section {
 /* ---------- SECTIONS ---------- */
 .about { padding: 70px 0 140px; }
 .skills { padding: 70px 0 140px; }
-.portfolio { padding: 70px 0 250px; }
+.portfolio { padding: 70px 0 290px; }
 .experience { min-height: 120vh !important; padding: 70px 0 140px; }
 .contact { padding: 70px 0 140px; }
 
@@ -1275,7 +1275,7 @@ section {
 
 @media (max-width: 768px) {
   :root { --section-padding: 60px 0; }
-  
+
   .hero { min-height: 100vh; padding: 50px 0 20px; }
   .hero h1 { font-size: 3rem; letter-spacing: -1.5px; margin-bottom: 8px; }
   .hero-avatar { width: 180px; height: 180px; border-radius: 40px; margin-bottom: 20px; }
@@ -1286,13 +1286,14 @@ section {
 
   .about-stats { gap: 32px; flex-wrap: wrap; }
   .stat-number { font-size: 2.5rem; }
-  
+
   .about-card { padding: 24px; gap: 16px; }
   .about-card-icon { width: 44px; height: 44px; font-size: 1.2rem; }
 
-  .portfolio { padding-bottom: 340px !important; }
+  .portfolio { padding-bottom: 140px !important; }
   .portfolio-grid { grid-template-columns: 1fr; }
-  
+
+
   /* PERF FIX: backdrop-filter on every stacked section kills mobile GPUs.
      Replace with a simple solid background that looks identical visually. */
   section {
@@ -1310,9 +1311,9 @@ section {
     animation-play-state: paused !important;
     transform: none !important;
   }
-  
+
   /* Magnetic Universe Mobile Scale */
-  .scrolling-text { 
+  .scrolling-text {
     font-size: 4rem;
     will-change: transform;
   }
@@ -1331,6 +1332,7 @@ section {
   .stat-number { font-size: 2rem; }
 }
 
+
 /* ---------- Final Authority Overflow Lock ---------- */
 html, body {
   overflow-x: hidden !important;
@@ -1347,6 +1349,7 @@ html, body {
 
 /* ---------- FOOTER Section ---------- */
 .creative-footer {
+  margin-top: 20px;
   padding: 30px 0 15px;
   background: var(--bg-dark);
   border-top: 1px solid var(--glass-border);

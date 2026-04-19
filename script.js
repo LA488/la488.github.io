@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const { clientX, clientY } = e;
       const x = clientX / window.innerWidth;
       const y = clientY / window.innerHeight;
-      
+
       blobs.forEach((blob, index) => {
         const speed = (index + 1) * 25;
         const moveX = (x - 0.5) * speed;
@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ——— Hybrid Stacking & Internal Scroll ———
-  const sections = document.querySelectorAll('section');
-  
+  const sections = document.querySelectorAll('section, footer');
+
   function updateStickyOffsets() {
     sections.forEach(section => {
       const height = section.offsetHeight;
@@ -75,9 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const cacheSectionMetrics = () => {
     sectionMetrics = Array.from(sections).map(section => ({
       element: section,
+      id: section.id ? `#${section.id}` : null,
       offsetTop: section.offsetTop,
       height: section.offsetHeight,
-      wasHidden: false  // Track visibility state to avoid repeated DOM writes
+      isActive: true // Track active state for pointer-events
     }));
     vh = window.innerHeight;
     isMobile = window.innerWidth <= 768;
@@ -100,50 +101,47 @@ document.addEventListener('DOMContentLoaded', () => {
         // nextMetric.offsetTop - scroll is its position relative to viewport
         const nextTop = nextMetric.offsetTop - scroll;
         let currentOverlap = Math.max(0, (vh - nextTop) / vh);
-        
+
         // Add scroll buffer: dead zone before transition starts
         const buffer = 0.1;
         currentOverlap = Math.max(0, (currentOverlap - buffer) / (1 - buffer));
-        
+
         // Apply power curve for smoother transition entry
         currentOverlap = Math.pow(currentOverlap, 1.2);
-        
+
         if (currentOverlap > maxOverlap) maxOverlap = currentOverlap;
       }
-      
+
       const section = metric.element;
       if (maxOverlap > 0) {
         const scale = 1 - (maxOverlap * 0.1);
         const opacity = Math.max(0, 1 - (maxOverlap * 1.25));
-        
+
         // Write transform & opacity directly — no CSS transition, no cascade storm
         section.style.transform = `scale(${scale}) translateZ(0)`;
         section.style.opacity = opacity;
-        
+
         // Blur: on desktop full 15px, on mobile lighter 8px (restored but cheaper)
         const maxBlur = isMobile ? 8 : 15;
         const blur = maxOverlap * (isMobile ? 12 : 20);
         section.style.filter = `blur(${Math.min(blur, maxBlur)}px)`;
-        
-        // PERF FIX: Only toggle visibility when crossing threshold, not every frame
-        const shouldHide = maxOverlap >= 0.95 || opacity <= 0.01;
-        if (shouldHide && !metric.wasHidden) {
-          metric.wasHidden = true;
-          section.style.visibility = 'hidden';
+
+        // PERF FIX: Only toggle pointer-events when crossing threshold
+        const shouldDisable = maxOverlap >= 0.95 || opacity <= 0.01;
+        if (shouldDisable && metric.isActive) {
+          metric.isActive = false;
           section.style.pointerEvents = 'none';
-        } else if (!shouldHide && metric.wasHidden) {
-          metric.wasHidden = false;
-          section.style.visibility = 'visible';
+        } else if (!shouldDisable && !metric.isActive) {
+          metric.isActive = true;
           section.style.pointerEvents = 'auto';
         }
       } else {
         // Only reset if section was previously affected
-        if (metric.wasHidden || section.style.opacity !== '') {
-          metric.wasHidden = false;
+        if (!metric.isActive || section.style.opacity !== '') {
+          metric.isActive = true;
           section.style.transform = 'scale(1) translateZ(0)';
           section.style.filter = 'none';
           section.style.opacity = '';
-          section.style.visibility = 'visible';
           section.style.pointerEvents = 'auto';
         }
       }
@@ -188,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ——— Navigation & Mobile Menu ———
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('nav-links');
-  
+
   if (hamburger) {
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('active');
@@ -202,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Check saved preference: Default is 'dark'
   const savedTheme = localStorage.getItem('theme');
-  
+
   if (savedTheme === 'light') {
     body.classList.add('light-mode');
   } else if (!savedTheme) {
@@ -217,54 +215,41 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // ——— Definitive Coordinate-Based Navigation ———
-  let sectionCoordinates = {};
-
-  const calculateSectionCoordinates = () => {
-    // Reset positions to ensure clean calculation
-    sectionCoordinates = { '#home': 0 };
-    
-    // We target all sections plus the footer (contact anchor)
-    const targets = ['about', 'experience', 'skills', 'portfolio', 'contact'];
-    
-    targets.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        // Use offsetTop: absolute document position unaffected by sticky/transforms
-        sectionCoordinates[`#${id}`] = el.offsetTop;
-      }
-    });
-  };
-
-  // Initial calculation and refresh on resize
-  // Small delay to ensure layout is settled
-  window.addEventListener('load', () => {
-    setTimeout(calculateSectionCoordinates, 100);
-  });
-  window.addEventListener('resize', calculateSectionCoordinates);
-
+  // ——— Robust Navigation Logic ———
   const navigationLinks = document.querySelectorAll('.nav-links a, .nav-logo, .hero-buttons a, .back-to-top');
-  
+
   navigationLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       const targetId = link.getAttribute('href');
       if (targetId && targetId.startsWith('#')) {
         e.preventDefault();
-        
+
         // Close mobile menu if open
         hamburger?.classList.remove('active');
         navLinks?.classList.remove('active');
+
+        if (targetId === '#home') {
+          lenis.scrollTo(0, {
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+          return;
+        }
+
+        const metric = sectionMetrics.find(m => m.id === targetId);
         
-        // Get pre-calculated coordinate
-        const targetScroll = sectionCoordinates[targetId] !== undefined 
-          ? sectionCoordinates[targetId] 
-          : (targetId === '#home' ? 0 : document.querySelector(targetId)?.offsetTop || 0);
-        
-        lenis.scrollTo(targetScroll, {
-          offset: 0, // Zero offset for perfect section boundary alignment
-          duration: 1.2,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
+        if (metric || targetId === '#home') {
+          // Use the static offsetTop captured during cacheSectionMetrics.
+          // This is untouched by sticky behavior or CSS transforms,
+          // ensuring perfect accuracy in both directions.
+          const targetScroll = targetId === '#home' ? 0 : metric.offsetTop;
+
+          lenis.scrollTo(targetScroll, {
+            offset: 0,
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        }
       }
     });
   });
@@ -290,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ——— Interactive Infinite Marquee ———
   const marqueeContainer = document.querySelector('.marquee-container');
   const marqueeTrack = document.querySelector('.marquee-track');
-  
+
   if (marqueeContainer && marqueeTrack) {
     let currentX = 0;
     let isDragging = false;
@@ -318,15 +303,15 @@ document.addEventListener('DOMContentLoaded', () => {
           dragVelocity = 0;
           currentX -= autoSpeed;
         }
-        
+
         // Seamless loop reset bounds
         const fullWidth = trackWidth + 30;
         if (currentX > 0) currentX -= fullWidth;
         else if (Math.abs(currentX) >= fullWidth) currentX += fullWidth;
-        
+
         marqueeTrack.style.transform = `translateX(${currentX}px)`;
       }
-      
+
       requestAnimationFrame(animateMarquee);
     }
 
@@ -346,24 +331,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const moveDrag = (e, x) => {
       if (!isDragging) return;
-      
+
       // Prevent page scrolling on touch devices while dragging the marquee
       if (e.type === 'touchmove') e.preventDefault();
-      
+
       // Calculate delta and apply multiplier (faster on mobile)
       const deltaX = x - lastDragX;
       lastDragX = x;
-      
+
       const dragMultiplier = window.innerWidth <= 768 ? 2.5 : 1.5;
       const movement = deltaX * dragMultiplier;
       currentX += movement;
       dragVelocity = movement; // Record velocity for momentum upon release
-      
+
       // Keep within loop bounds even during drag
       const fullWidth = trackWidth + 30;
       if (currentX > 0) currentX -= fullWidth;
       else if (Math.abs(currentX) >= fullWidth) currentX += fullWidth;
-      
+
       marqueeTrack.style.transform = `translateX(${currentX}px)`;
     };
 
@@ -371,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDragging) return;
       isDragging = false;
       marqueeContainer.style.cursor = 'grab';
-      
+
       // Resume auto-scroll after 2 seconds of idleness
       interactionTimer = setTimeout(() => {
         isPaused = false;
@@ -391,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     marqueeContainer.addEventListener('mouseenter', () => {
       if (!isDragging) isPaused = true;
     });
-    
+
     marqueeContainer.addEventListener('mouseleave', () => {
       if (!isDragging) {
         clearTimeout(interactionTimer);
@@ -416,11 +401,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const rect = btn.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        
+
         const intensity = btn.classList.contains('magnetic-btn') ? 0.4 : 0.3;
         btn.style.transform = `translate(${x * intensity}px, ${y * intensity}px)`;
       });
-      
+
       btn.addEventListener('mouseleave', () => {
         btn.style.transform = `translate(0, 0)`;
       });
